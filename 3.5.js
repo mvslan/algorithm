@@ -37,7 +37,27 @@ var arr = [2, 0, 2, 1, 1, 0]
 
 
 
-// 88
+// 88，合并两个有序数组
+
+var merge = function (nums1, m, nums2, n) {
+  var i = m - 1, j = n - 1
+  while (i >= 0 && j >= 0) {
+    nums1[i + j + 1] = nums1[i] > nums2[j] ? nums1[i--] : nums2[j--]
+  }
+  while (j >= 0) nums1[j] = nums2[j--]
+};
+
+var arr1 = [1, 2, 3]
+var arr2 = [2, 3, 4]
+merge(arr1, 3, arr2, 3)
+console.log(arr1)
+
 
 
 // 215
+var findKthLargest = function (nums, k) {
+  var a = nums.sort(function (a, b) {
+    return a - b
+  })
+  return a[a.length - k]
+};

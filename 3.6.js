@@ -25,3 +25,19 @@
 
 
 // 11
+var maxArea = function (height) {
+  var sum = height.length
+  if (height.length <= 1) {
+    return 0
+  }
+  if (height.length == 2) {
+    return Math.min(height[1], height[0])
+  }
+  return Math.max(Math.min(height[sum - 1], height[0]) * (sum - 1),
+    maxArea(height.slice(0, sum - 1)),
+    maxArea(height.slice(1, sum))
+  )
+};
+
+var arr = [2, 3, 10, 5, 7, 8, 9, 1, 1, 1]
+console.log(maxArea(arr))
