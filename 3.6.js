@@ -3,41 +3,94 @@
 
 //解法1，二分查找法
 
-
-
 //解法2，对撞指针
 
-
-
-
-
-//  125
-
-
-
-// 344
-
-
-
-// 345
-
-
-
-
-// 11
-var maxArea = function (height) {
-  var sum = height.length
-  if (height.length <= 1) {
-    return 0
+//  125：判断回文字符串 .   A-Z:65-90,a-z:97-122,0-9:48-57
+// 使用正则先修改字符串会更好！！
+function isLetter(l) {
+  if (
+    (l.charCodeAt(0) >= 65 && l.charCodeAt(0) <= 90) ||
+    (l.charCodeAt(0) >= 97 && l.charCodeAt(0) <= 122) ||
+    (l.charCodeAt(0) >= 48 && l.charCodeAt(0) <= 57)
+  ) {
+    return true;
   }
-  if (height.length == 2) {
-    return Math.min(height[1], height[0])
+  return false;
+}
+
+var isPalindrome = function (s) {
+  var l = 0,
+    r = s.length - 1;
+  flag = true;
+  if (s == "") {
+    return flag;
   }
-  return Math.max(Math.min(height[sum - 1], height[0]) * (sum - 1),
-    maxArea(height.slice(0, sum - 1)),
-    maxArea(height.slice(1, sum))
-  )
+  while (l <= r) {
+    if (isLetter(s[l]) && isLetter(s[r])) {
+      if (s[l].toLocaleUpperCase() !== s[r].toLocaleUpperCase()) {
+        flag = false;
+      }
+      l++;
+      r--;
+      continue;
+    }
+    if (!isLetter(s[l])) {
+      l++;
+    }
+    if (!isLetter(s[r])) {
+      r--;
+    }
+  }
+  return flag;
 };
 
-var arr = [2, 3, 10, 5, 7, 8, 9, 1, 1, 1]
+// 344：反转数组
+var reverseString = function (s) {
+  return s.reverse();
+};
+
+// 345:反转元音字母
+var letters = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
+var reverseVowels = function (s) {
+  var str = s.split("");
+  var l = 0,
+    r = str.length - 1;
+  while (l <= r) {
+    if (letters.includes(str[l]) && letters.includes(str[r])) {
+      var temp = str[l];
+      str[l] = str[r];
+      str[r] = temp;
+      l++;
+      r--;
+    } else if (letters.includes(str[l]) && !letters.includes(str[r])) {
+      r--;
+    } else {
+      l++;
+    }
+  }
+  return str.join("");
+};
+
+var str = "hello";
+
+// 11,,,水池问题：对撞指针
+
+var maxArea = function (height) {
+  var l = 0,
+    r = height.length - 1,
+    maxArea = 0;
+  while (l < r) {
+    maxArea = Math.max(maxArea, Math.min(height[l], height[r]) * (r - l));
+    if (height[l] <= height[r]) {
+      l++;
+    } else {
+      r--;
+    }
+  }
+  return maxArea;
+};
+
+
+var arr = [1, 8, 6, 2, 5, 4, 8, 3, 7]
 console.log(maxArea(arr))
+
